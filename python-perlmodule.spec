@@ -1,7 +1,7 @@
 %define oname	pyperl
 %define name	python-perlmodule
 %define version 1.0.1
-%define release %mkrel 7
+%define release %mkrel 8
 
 # removed as perl build no longer provides thread
 %define multi_perl 0
