@@ -46,7 +46,7 @@ perl Makefile.PL  \
 perl -pi -e 's/MAN3EXT = 3pm/MAN3EXT = 3/' Makefile
 make
 cd ..
-ln -s Python-Object/blib/arch/auto/Python ./
+ln -sf Python-Object/blib/arch/auto/Python ./
 python setup.py build
 #for i in  Python-Object/blib/man3/*3pm ; do
 #    mv -f $i ${i%%pm}
@@ -72,6 +72,6 @@ rm -rf $RPM_BUILD_ROOT
 %perl_vendorarch/auto/Python
 %perl_vendorarch/Python.pm
 %perl_vendorarch/Python
-%_mandir/man3/*
-%_libdir/python*/site-packages/*
+%{_mandir}/man3/*
+%{_libdir}/python*/site-packages/*
 
