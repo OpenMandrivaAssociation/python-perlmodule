@@ -1,22 +1,24 @@
 %define oname	pyperl
 %define name	python-perlmodule
-%define version 1.0.1
-%define release %mkrel 8
+%define version 1.0.1d
+%define release %mkrel 1
 
 # removed as perl build no longer provides thread
 %define multi_perl 0
 
-Summary:       Perl for python - use perl code in python
-Name:          %{name}
-Version:       %{version}
-Release:       %{release}
-Source0:       %{oname}-%{version}.tar.bz2
-License:       Artistic
-Group:         Development/Python
-BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-Url:           http://search.cpan.org/dist/%oname/
-BuildRequires: perl-devel >= 5.6
-BuildRequires: python-devel >= 1.5.2
+Summary:	Perl for python - use perl code in python
+Name:		%{name}
+Version:	%{version}
+Release:	%{release}
+Source0:	%{oname}-%{version}.tar.lzma
+Patch0:		pyperl-1.0.1d-disable-threads.patch
+Patch1:		pyperl-1.0.1d-dont-rebuild-perl-object-at-install.patch
+License:	Artistic
+Group:		Development/Python
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+Url:		http://search.cpan.org/dist/%{oname}/
+BuildRequires:	perl-devel >= 5.6
+BuildRequires:	python-devel >= 1.5.2
 
 %description
 Perlmodule makes it possible to embed perl interpreters in any
@@ -38,13 +40,13 @@ rm -f MULTI_PERL
 
 cd Python-Object
 CFLAGS="$RPM_OPT_FLAGS"
-perl Makefile.PL  \
+perl Makefile.PL  INSTALLDIRS=vendor\
 %if %multi_perl
 	-DMULTI_PERL \
 %endif
 	PREFIX=$RPM_BUILD_ROOT%{_prefix}
 perl -pi -e 's/MAN3EXT = 3pm/MAN3EXT = 3/' Makefile
-make
+%make
 cd ..
 ln -sf Python-Object/blib/arch/auto/Python ./
 python setup.py build
