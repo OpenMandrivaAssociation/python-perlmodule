@@ -33,47 +33,42 @@ gets its own separate perl interpreter.
 
 %prep
 %setup -q -n %{oname}-%{version}
+
 %build
 %if !%multi_perl
 rm -f MULTI_PERL
 %endif
 
+ln -sf Python-Object/blib/arch/auto/Python ./
+python setup.py build
+
 cd Python-Object
-CFLAGS="$RPM_OPT_FLAGS"
+CCFLAGS="%{optflags}" \
 perl Makefile.PL  INSTALLDIRS=vendor\
 %if %multi_perl
 	-DMULTI_PERL \
 %endif
-	PREFIX=$RPM_BUILD_ROOT%{_prefix}
+	PREFIX=%{buildroot}%{_prefix}
 perl -pi -e 's/MAN3EXT = 3pm/MAN3EXT = 3/' Makefile
-%make
+%make LDDLFLAGS="-shared -L%{perl_archlib}/CORE/ -lperl $TOP/build/temp*/pyo.o"
 cd ..
-ln -sf Python-Object/blib/arch/auto/Python ./
-python setup.py build
-#for i in  Python-Object/blib/man3/*3pm ; do
-#    mv -f $i ${i%%pm}
-#done;
-
-#python test.py
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
+python setup.py install --root %{buildroot}
 cd Python-Object
 make install_vendor
-#mkdir -p $RPM_BUILD_ROOT/%_mandir/man3pm
-#cp blib/man3/*.3pm $RPM_BUILD_ROOT/%_mandir/man3pm
 cd ..
-python setup.py install --root $RPM_BUILD_ROOT
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
 %doc README TODO MANIFEST Changes
-%perl_vendorarch/auto/Python
-%perl_vendorarch/Python.pm
-%perl_vendorarch/Python
+%{perl_vendorarch}/auto/Python
+%{perl_vendorarch}/Python.pm
+%{perl_vendorarch}/Python
 %{_mandir}/man3/*
 %{_libdir}/python*/site-packages/*
 
