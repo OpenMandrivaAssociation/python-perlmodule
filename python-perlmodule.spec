@@ -11,8 +11,9 @@ Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 Source0:	%{oname}-%{version}.tar.lzma
-Patch0:		pyperl-1.0.1d-disable-threads.patch
+#Patch0:	pyperl-1.0.1d-disable-threads.patch
 Patch1:		pyperl-1.0.1d-dont-rebuild-perl-object-at-install.patch
+Patch2:		pyperl-1.0.1d-makefile.pl-fixes.patch
 License:	Artistic
 Group:		Development/Python
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -33,32 +34,33 @@ gets its own separate perl interpreter.
 
 %prep
 %setup -q -n %{oname}-%{version}
+#%patch0 -p1 -b .nothreads
+%patch1 -p1 -b .norebuild
+%patch2 -p1 -b .makefixes
 
 %build
 %if !%multi_perl
 rm -f MULTI_PERL
 %endif
 
-ln -sf Python-Object/blib/arch/auto/Python ./
-python setup.py build
-
 cd Python-Object
-CCFLAGS="%{optflags}" \
-perl Makefile.PL  INSTALLDIRS=vendor\
+perl Makefile.PL INSTALLDIRS=vendor \
 %if %multi_perl
-	-DMULTI_PERL \
+	-DMULTI_PERL
 %endif
-	PREFIX=%{buildroot}%{_prefix}
-perl -pi -e 's/MAN3EXT = 3pm/MAN3EXT = 3/' Makefile
-%make LDDLFLAGS="-shared -L%{perl_archlib}/CORE/ -lperl $TOP/build/temp*/pyo.o"
+
+%make
 cd ..
+
+ln -s Python-Object/blib/arch/auto/Python ./
+python setup.py build
 
 %install
 rm -rf %{buildroot}
-python setup.py install --root %{buildroot}
 cd Python-Object
-make install_vendor
+%makeinstall_std
 cd ..
+python setup.py install --root %{buildroot}
 
 %clean
 rm -rf %{buildroot}
@@ -70,5 +72,5 @@ rm -rf %{buildroot}
 %{perl_vendorarch}/Python.pm
 %{perl_vendorarch}/Python
 %{_mandir}/man3/*
-%{_libdir}/python*/site-packages/*
+%{python_sitearch}/*
 
