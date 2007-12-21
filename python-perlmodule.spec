@@ -18,6 +18,7 @@ Patch3:		pyperl-1.0.1d-fix-tests.patch
 Patch4:		pyperl-1.0.1d-python2.5-fixes.patch
 License:	Artistic
 Group:		Development/Python
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Url:		http://search.cpan.org/dist/%{oname}/
 BuildRequires:	perl-devel >= 5.6
 BuildRequires:	python-devel >= 1.5.2
