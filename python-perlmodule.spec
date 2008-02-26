@@ -18,6 +18,7 @@ Patch3:		pyperl-1.0.1d-fix-tests.patch
 Patch4:		pyperl-1.0.1d-python2.5-fixes.patch
 Patch5:		pyperl-1.0.1d-older-python-compat.patch
 Patch6:		pyperl-1.0.1d-fix-setup-install.patch
+Patch7:		pyperl-1.0.1d-new-perl-fix.patch
 License:	Artistic
 Group:		Development/Python
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -46,6 +47,7 @@ gets its own separate perl interpreter.
 %patch4 -p1 -b .python2.5
 %patch5 -p0 -b .oldpython
 %patch6 -p0 -b .fixsetup
+%patch7 -p1 -b .newperl
 
 %build
 %if !%multi_perl
