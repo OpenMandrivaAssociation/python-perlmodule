@@ -24,6 +24,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Url:		http://search.cpan.org/dist/%{oname}/
 BuildRequires:	perl-devel >= 5.6
 BuildRequires:	python-devel >= 1.5.2
+Provides:	%{oname} = %{version}-%{release}
 
 %description
 Perlmodule makes it possible to embed perl interpreters in any
