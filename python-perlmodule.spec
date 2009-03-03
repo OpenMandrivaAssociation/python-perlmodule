@@ -1,7 +1,7 @@
 %define oname	pyperl
 %define name	python-perlmodule
 %define version 1.0.1d
-%define release %mkrel 6
+%define release %mkrel 7
 
 # removed as perl build no longer provides thread
 %define multi_perl 0
@@ -50,6 +50,10 @@ gets its own separate perl interpreter.
 %patch7 -p1 -b .newperl
 
 %build
+# distutils enforce the use of the same build options used for python
+# for building modules, and format errors are impossible to fix here with
+# current gcc error messages
+export CFLAGS="-Wno-error=format-security"
 %if !%multi_perl
 rm -f MULTI_PERL
 %endif
