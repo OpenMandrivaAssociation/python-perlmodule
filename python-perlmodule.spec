@@ -3,7 +3,7 @@
 %define version 1.0.1d
 %define release %mkrel 7
 
-# removed as perl build no longer provides thread
+# tried enabled again as perl build now provides threads again, but breaks...
 %define multi_perl 0
 
 Summary:	Perl for python - use perl code in python
@@ -19,6 +19,7 @@ Patch4:		pyperl-1.0.1d-python2.5-fixes.patch
 Patch5:		pyperl-1.0.1d-older-python-compat.patch
 Patch6:		pyperl-1.0.1d-fix-setup-install.patch
 Patch7:		pyperl-1.0.1d-new-perl-fix.patch
+Patch8:		pyperl-1.0.1d-fix-format-warnings.patch
 License:	Artistic
 Group:		Development/Python
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -41,13 +42,14 @@ gets its own separate perl interpreter.
 %prep
 %setup -q -n %{oname}-%{version}
 #%patch0 -p1 -b .nothreads
-%patch1 -p1 -b .improved
-%patch2 -p1 -b .makefixes
-%patch3 -p1 -b .fixtests
-%patch4 -p1 -b .python2.5
-%patch5 -p0 -b .oldpython
-%patch6 -p0 -b .fixsetup
-%patch7 -p1 -b .newperl
+%patch1 -p1 -b .improved~
+%patch2 -p1 -b .makefixes~
+%patch3 -p1 -b .fixtests~
+%patch4 -p1 -b .python2.5~
+%patch5 -p0 -b .oldpython~
+%patch6 -p0 -b .fixsetup~
+%patch7 -p1 -b .newperl~
+%patch8 -p1 -b .format_warnings~
 
 %build
 # distutils enforce the use of the same build options used for python
@@ -56,6 +58,8 @@ gets its own separate perl interpreter.
 export CFLAGS="-Wno-error=format-security"
 %if !%multi_perl
 rm -f MULTI_PERL
+%else
+touch MULTI_PERL
 %endif
 python setup.py build
 
