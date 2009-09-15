@@ -1,7 +1,7 @@
 %define oname	pyperl
 %define name	python-perlmodule
 %define version 1.0.1d
-%define release %mkrel 7
+%define release %mkrel 8
 
 # tried enabled again as perl build now provides threads again, but breaks...
 %define multi_perl 0
