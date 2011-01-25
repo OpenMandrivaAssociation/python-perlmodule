@@ -20,6 +20,7 @@ Patch5:		pyperl-1.0.1d-older-python-compat.patch
 Patch6:		pyperl-1.0.1d-fix-setup-install.patch
 Patch7:		pyperl-1.0.1d-new-perl-fix.patch
 Patch8:		pyperl-1.0.1d-fix-format-warnings.patch
+Patch9:		pyperl-1.0.1d-link-against-libdl.patch
 License:	Artistic
 Group:		Development/Python
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -50,6 +51,7 @@ gets its own separate perl interpreter.
 %patch6 -p0 -b .fixsetup~
 %patch7 -p1 -b .newperl~
 %patch8 -p1 -b .format_warnings~
+%patch9 -p1 -b .libdl~
 
 %build
 # distutils enforce the use of the same build options used for python
