@@ -52,10 +52,6 @@ gets its own separate perl interpreter.
 %patch9 -p1 -b .libdl~
 
 %build
-# distutils enforce the use of the same build options used for python
-# for building modules, and format errors are impossible to fix here with
-# current gcc error messages
-export CFLAGS="-Wno-error=format-security"
 %if !%multi_perl
 rm -f MULTI_PERL
 %else
