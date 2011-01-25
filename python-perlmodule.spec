@@ -11,7 +11,6 @@ Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 Source0:	%{oname}-%{version}.tar.lzma
-#Patch0:		pyperl-1.0.1d-disable-threads.patch
 Patch1:		pyperl-1.0.1d-improved-setup.py
 Patch2:		pyperl-1.0.1d-makefile.pl-fixes.patch
 Patch3:		pyperl-1.0.1d-fix-tests.patch
@@ -42,7 +41,6 @@ gets its own separate perl interpreter.
 
 %prep
 %setup -q -n %{oname}-%{version}
-#%patch0 -p1 -b .nothreads
 %patch1 -p1 -b .improved~
 %patch2 -p1 -b .makefixes~
 %patch3 -p1 -b .fixtests~
