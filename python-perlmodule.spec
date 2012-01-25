@@ -6,7 +6,7 @@
 Summary:	Perl for python - use perl code in python
 Name:		python-perlmodule
 Version:	1.0.1d
-Release:	12
+Release:	13
 Source0:	%{oname}-%{version}.tar.lzma
 Patch1:		pyperl-1.0.1d-improved-setup.py
 Patch2:		pyperl-1.0.1d-makefile.pl-fixes.patch
