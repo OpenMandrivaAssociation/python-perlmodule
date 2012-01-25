@@ -1,15 +1,12 @@
 %define oname	pyperl
-%define name	python-perlmodule
-%define version 1.0.1d
-%define release %mkrel 11
 
 # tried enabled again as perl build now provides threads again, but breaks...
 %define multi_perl 0
 
 Summary:	Perl for python - use perl code in python
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Name:		python-perlmodule
+Version:	1.0.1d
+Release:	12
 Source0:	%{oname}-%{version}.tar.lzma
 Patch1:		pyperl-1.0.1d-improved-setup.py
 Patch2:		pyperl-1.0.1d-makefile.pl-fixes.patch
@@ -22,11 +19,10 @@ Patch8:		pyperl-1.0.1d-fix-format-warnings.patch
 Patch9:		pyperl-1.0.1d-link-against-libdl.patch
 License:	Artistic
 Group:		Development/Python
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Url:		http://search.cpan.org/dist/%{oname}/
 BuildRequires:	perl-devel >= 5.6
 BuildRequires:	python-devel >= 1.5.2
-Provides:	%{oname} = %{version}-%{release}
+Provides:	%{oname} = %{EVRD}
 
 %description
 Perlmodule makes it possible to embed perl interpreters in any
@@ -63,14 +59,9 @@ python setup.py build
 python setup.py test
 
 %install
-rm -rf %{buildroot}
 python setup.py install --root %{buildroot}
 
-%clean
-rm -rf %{buildroot}
-
 %files
-%defattr(-,root,root)
 %doc README TODO MANIFEST Changes
 %{perl_vendorarch}/auto/Python
 %{perl_vendorarch}/Python.pm
