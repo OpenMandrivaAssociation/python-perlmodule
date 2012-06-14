@@ -6,7 +6,7 @@
 Summary:	Perl for python - use perl code in python
 Name:		python-perlmodule
 Version:	1.0.1d
-Release:	13
+Release:	14
 Source0:	%{oname}-%{version}.tar.lzma
 Patch1:		pyperl-1.0.1d-improved-setup.py
 Patch2:		pyperl-1.0.1d-makefile.pl-fixes.patch
@@ -17,6 +17,7 @@ Patch6:		pyperl-1.0.1d-fix-setup-install.patch
 Patch7:		pyperl-1.0.1d-new-perl-fix.patch
 Patch8:		pyperl-1.0.1d-fix-format-warnings.patch
 Patch9:		pyperl-1.0.1d-link-against-libdl.patch
+Patch10:	pyperl-1.0.1d-link-against-python.patch
 License:	Artistic
 Group:		Development/Python
 Url:		http://search.cpan.org/dist/%{oname}/
@@ -46,6 +47,7 @@ gets its own separate perl interpreter.
 %patch7 -p1 -b .newperl~
 %patch8 -p1 -b .format_warnings~
 %patch9 -p1 -b .libdl~
+%patch10 -p1 -b .py_link~
 
 %build
 %if !%{with multi_perl}
