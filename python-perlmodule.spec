@@ -1,7 +1,7 @@
 %define oname	pyperl
 
 # tried enabled again as perl build now provides threads again, but breaks...
-%define multi_perl 0
+%bcond_with	multi_perl
 
 Summary:	Perl for python - use perl code in python
 Name:		python-perlmodule
@@ -30,7 +30,7 @@ python program. It can be used to invoke arbitrary perl code, load
 any perl modules, and make calls directly into perl functions. The
 perl code invoked can call back into python as it sees fit.
 
-%if %multi_perl
+%if %{with multi_perl}
 This package is built with MULTI_PERL enabled--each python thread
 gets its own separate perl interpreter.
 %endif
@@ -48,7 +48,7 @@ gets its own separate perl interpreter.
 %patch9 -p1 -b .libdl~
 
 %build
-%if !%multi_perl
+%if !%{with multi_perl}
 rm -f MULTI_PERL
 %else
 touch MULTI_PERL
