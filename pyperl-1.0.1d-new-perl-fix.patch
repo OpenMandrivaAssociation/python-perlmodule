@@ -1,0 +1,45 @@
+--- pyperl-1.0.1d/svrv_object.c.newperl~	2011-01-25 23:27:09.545333979 +0100
++++ pyperl-1.0.1d/svrv_object.c	2011-01-25 23:27:09.566333979 +0100
+@@ -1174,7 +1174,7 @@ pysvrv_getattr(PySVRV *self, char *name)
+ 	}
+     }
+     else if (strcmp(name, "__type__") == 0) {
+-	char *tmp;
++	const char *tmp;
+ 	ENTER_PERL;
+ 	tmp = sv_reftype(SvRV(self->rv), 0);
+ 	ENTER_PYTHON;
+--- pyperl-1.0.1d/svrv_object.h.newperl~	2011-01-25 23:27:09.558333979 +0100
++++ pyperl-1.0.1d/svrv_object.h	2011-01-25 23:27:09.575333979 +0100
+@@ -1,6 +1,8 @@
+ /* Copyright 2000-2001 ActiveState
+  */
+ 
++#include <XSUB.h>
++
+ /* Python < 2.5 compat */
+ #if PY_VERSION_HEX < 0x02050000 && !defined(PY_SSIZE_T_MIN)
+ typedef int Py_ssize_t;
+--- pyperl-1.0.1d/try_perlapi.pl.newperl~	2007-10-16 11:42:41.000000000 +0200
++++ pyperl-1.0.1d/try_perlapi.pl	2011-01-25 23:27:17.232333978 +0100
+@@ -51,9 +51,9 @@ fake_entertry()
+     ENTER;
+     SAVETMPS;
+ 
+-    Perl_push_return(aTHX_ Nullop);
++//    Perl_push_return(aTHX_ Nullop);
+     PUSHBLOCK(cx, (CXt_EVAL|CXp_TRYBLOCK), PL_stack_sp);
+-    PUSHEVAL(cx, 0, 0);
++    PUSHEVAL(cx, 0);
+     PL_eval_root = PL_op;
+     PL_in_eval = EVAL_INEVAL;
+     sv_setpvn(ERRSV, "", 0);
+@@ -72,7 +72,7 @@ fake_leavetry(I32 oldscope)
+ 
+         POPBLOCK(cx,newpm);
+         POPEVAL(cx);
+-        Perl_pop_return(aTHX);
++//        Perl_pop_return(aTHX);
+         PL_curpm = newpm;
+     }
+ 

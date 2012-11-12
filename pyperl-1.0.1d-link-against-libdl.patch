@@ -1,0 +1,10 @@
+--- pyperl-1.0.1d/setup.py.libdl~	2011-01-25 23:32:40.076333978 +0100
++++ pyperl-1.0.1d/setup.py	2011-01-25 23:32:43.389333977 +0100
+@@ -95,6 +95,7 @@ else:
+         cc_extra.append("-DDL_HACK")
+         extra_ext.append(Extension(name = "perl",
+                                    sources = ["dlhack.c"],
++				   libraries= ["dl"],
+                                    ))
+ 
+ 

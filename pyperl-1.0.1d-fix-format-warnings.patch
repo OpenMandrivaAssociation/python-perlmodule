@@ -1,0 +1,21 @@
+diff -p -up pyperl-1.0.1d/Python-Object/Object.xs.format_warnings~ pyperl-1.0.1d/Python-Object/Object.xs
+--- pyperl-1.0.1d/Python-Object/Object.xs.format_warnings~	2009-08-18 12:47:05.000000000 +0200
++++ pyperl-1.0.1d/Python-Object/Object.xs	2009-08-18 12:59:09.000000000 +0200
+@@ -913,7 +913,7 @@ type(self)
+     case 1:    RETVAL = self->type;      break;
+     case 2:    RETVAL = self->value;     break;
+     case 3:    RETVAL = self->traceback; break;
+-    default: croak("Unknown attribute (%d)", ix);
++    default: croak("Unknown attribute (%d)", (int)ix);
+         }
+         ENTER_PYTHON;
+         Py_XINCREF(RETVAL);
+@@ -1055,7 +1055,7 @@ Exception(...)
+ #endif
+     case 27: e = PyExc_ValueError; break;
+     case 28: e = PyExc_ZeroDivisionError; break;
+-    default: croak("Bad exception selector (%d)", ix); break;
++    default: croak("Bad exception selector (%d)", (int)ix); break;
+     }
+     if (items) {
+             SV* argsv = ST(0);
