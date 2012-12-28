@@ -1,13 +1,13 @@
-%define oname	pyperl
+%define modname	pyperl
 
 # tried enabled again as perl build now provides threads again, but breaks...
-%define multi_perl 0
+%bcond_with	multi_perl
 
 Summary:	Perl for python - use perl code in python
 Name:		python-perlmodule
 Version:	1.0.1d
-Release:	13
-Source0:	%{oname}-%{version}.tar.lzma
+Release:	14
+Source0:	%{modname}-%{version}.tar.lzma
 Patch1:		pyperl-1.0.1d-improved-setup.py
 Patch2:		pyperl-1.0.1d-makefile.pl-fixes.patch
 Patch3:		pyperl-1.0.1d-fix-tests.patch
@@ -17,12 +17,13 @@ Patch6:		pyperl-1.0.1d-fix-setup-install.patch
 Patch7:		pyperl-1.0.1d-new-perl-fix.patch
 Patch8:		pyperl-1.0.1d-fix-format-warnings.patch
 Patch9:		pyperl-1.0.1d-link-against-libdl.patch
+Patch10:	pyperl-1.0.1d-link-against-python.patch
 License:	Artistic
 Group:		Development/Python
-Url:		http://search.cpan.org/dist/%{oname}/
+Url:		http://search.cpan.org/dist/%{modname}/
 BuildRequires:	perl-devel >= 5.6
-BuildRequires:	python-devel >= 1.5.2
-Provides:	%{oname} = %{EVRD}
+BuildRequires:	pkgconfig(python)
+Provides:	%{modname} = %{EVRD}
 
 %description
 Perlmodule makes it possible to embed perl interpreters in any
@@ -30,13 +31,13 @@ python program. It can be used to invoke arbitrary perl code, load
 any perl modules, and make calls directly into perl functions. The
 perl code invoked can call back into python as it sees fit.
 
-%if %multi_perl
-This package is built with MULTI_PERL enabled--each python thread
+%if %{with multi_perl}
+This package is built with MULTI_PERL enabled, each python thread
 gets its own separate perl interpreter.
 %endif
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -q -n %{modname}-%{version}
 %patch1 -p1 -b .improved~
 %patch2 -p1 -b .makefixes~
 %patch3 -p1 -b .fixtests~
@@ -46,9 +47,10 @@ gets its own separate perl interpreter.
 %patch7 -p1 -b .newperl~
 %patch8 -p1 -b .format_warnings~
 %patch9 -p1 -b .libdl~
+%patch10 -p1 -b .py_link~
 
 %build
-%if !%multi_perl
+%if %{with multi_perl}
 rm -f MULTI_PERL
 %else
 touch MULTI_PERL
@@ -71,6 +73,10 @@ python setup.py install --root %{buildroot}
 
 
 %changelog
+* Fri Dec 28 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 1.0.1d-14
+- always link against python (P10)
+- use %bcond_with for multi_perl
+
 * Wed Jan 25 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 1.0.1d-13
 + Revision: 768358
 - svn commit -m mass rebuild of perl extension against perl 5.14.2
