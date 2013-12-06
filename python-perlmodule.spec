@@ -6,7 +6,7 @@
 Summary:	Perl for python - use perl code in python
 Name:		python-perlmodule
 Version:	1.0.1d
-Release:	17
+Release:	18
 License:	Artistic
 Group:		Development/Python
 Url:		http://search.cpan.org/dist/%{oname}/
