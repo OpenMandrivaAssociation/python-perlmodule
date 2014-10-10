@@ -22,7 +22,7 @@ Patch8:		pyperl-1.0.1d-fix-format-warnings.patch
 Patch9:		pyperl-1.0.1d-link-against-libdl.patch
 Patch10:	pyperl-1.0.1d-link-against-python.patch
 BuildRequires:	perl-devel >= 5.6
-BuildRequires:	pkgconfig(python)
+BuildRequires:	pkgconfig(python2)
 Provides:	%{oname} = %{EVRD}
 
 %description
@@ -55,13 +55,13 @@ rm -f MULTI_PERL
 %else
 touch MULTI_PERL
 %endif
-python setup.py build
+%{__python2} setup.py build
 
 %check
-python setup.py test
+%{__python2} setup.py test
 
 %install
-python setup.py install --root %{buildroot}
+%{__python2} setup.py install --root %{buildroot}
 
 %files
 %doc README TODO MANIFEST Changes
@@ -69,5 +69,5 @@ python setup.py install --root %{buildroot}
 %{perl_vendorarch}/Python.pm
 %{perl_vendorarch}/Python
 %{_mandir}/man3/*
-%{python_sitearch}/*
+%{py2_platsitedir}/*
 
