@@ -21,6 +21,7 @@ Patch7:		pyperl-1.0.1d-new-perl-fix.patch
 Patch8:		pyperl-1.0.1d-fix-format-warnings.patch
 Patch9:		pyperl-1.0.1d-link-against-libdl.patch
 Patch10:	pyperl-1.0.1d-link-against-python.patch
+BuildRequires:	perl(ExtUtils::Embed)
 BuildRequires:	perl-devel >= 5.6
 BuildRequires:	pkgconfig(python2)
 Provides:	%{oname} = %{EVRD}
