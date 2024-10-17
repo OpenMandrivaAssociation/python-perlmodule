@@ -9,7 +9,7 @@ Version:	1.0.1d
 Release:	24
 License:	Artistic
 Group:		Development/Python
-Url:		http://search.cpan.org/dist/%{oname}/
+Url:		https://search.cpan.org/dist/%{oname}/
 Source0:	%{oname}-%{version}.tar.lzma
 Patch1:		pyperl-1.0.1d-improved-setup.py
 Patch2:		pyperl-1.0.1d-makefile.pl-fixes.patch
